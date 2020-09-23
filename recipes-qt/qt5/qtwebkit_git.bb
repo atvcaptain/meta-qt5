@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = " \
     file://Source/JavaScriptCore/parser/Parser.h;endline=21;md5=bd69f72183a7af673863f057576e21ee \
 "
 
-DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-native"
+DEPENDS += "qtbase qtdeclarative icu ruby-native sqlite3 glib-2.0 libxslt gperf-native bison-native flex-native"
 
 # qemuarm build fails with:
 # | {standard input}: Assembler messages:
@@ -23,6 +23,7 @@ SRC_URI += "\
     file://0002-Remove-TEXTREL-tag-in-x86.patch \
     file://0003-Exclude-backtrace-API-for-non-glibc-libraries.patch \
     file://0004-fix-build-with-bison-3.7.patch \
+    file://0005-fix-webkit2-compile-asserts.patch \
 "
 
 PACKAGECONFIG ??= "gstreamer qtlocation qtmultimedia qtsensors qtwebchannel \
@@ -64,6 +65,8 @@ do_configure_prepend() {
     # disable fontconfig test if it isn't enabled by PACKAGECONFIG
     sed -e 's/\s\(config_fontconfig: \)/ OE_FONTCONFIG_ENABLED:\1/' -i ${S}/Tools/qmake/mkspecs/features/features.prf
 }
+
+CXXFLAGS += "-fpermissive -Wno-expansion-to-defined -Wno-unused-local-typedefs -Wno-cast-align -Wno-class-memaccess -Wno-deprecated-declarations -Wno-deprecated-copy"
 
 # Forcibly enable ICU, so qtbase doesn't need it.
 EXTRA_QMAKEVARS_PRE += "QT_CONFIG+=icu"
