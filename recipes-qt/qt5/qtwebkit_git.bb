@@ -24,6 +24,7 @@ SRC_URI += "\
     file://0003-Exclude-backtrace-API-for-non-glibc-libraries.patch \
     file://0004-fix-build-with-bison-3.7.patch \
     file://0005-fix-webkit2-compile-asserts.patch \
+    file://0006-fix-build-with-icu-68.1.patch \
 "
 
 PACKAGECONFIG ??= "gstreamer qtlocation qtmultimedia qtsensors qtwebchannel \
